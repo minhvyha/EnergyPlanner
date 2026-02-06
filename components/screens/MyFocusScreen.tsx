@@ -77,13 +77,13 @@ export default function MyFocusScreen() {
         <div className="flex gap-3 pb-6">
           <button
             onClick={() => setShowTaskLibraryModal(true)}
-            className="flex-1 bg-white text-black font-bold py-3.5 px-6 rounded-[20px] border-[3px] border-black  hover:translate-y-0.5 hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all"
+            className="flex-1 bg-[#F5E7FF] text-black font-bold py-3.5 px-4 rounded-[20px] border-[3px] border-black  hover:translate-y-0.5 shadow-[3px_3px_0px_0px_rgba(0,0,0,0.25)] transition-all"
           >
             + Task Library
           </button>
           <button
             onClick={() => setShowNewTaskModal(true)}
-            className="flex-1 bg-[#FDE047] text-black font-bold py-3.5 px-6 rounded-[20px] border-[3px] border-black  hover:translate-y-0.5 hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all"
+            className="flex-1 bg-[#FFF4BC] text-black font-bold py-3.5 px-4 rounded-[20px] border-[3px] border-black  hover:translate-y-0.5 shadow-[3px_3px_0px_0px_rgba(0,0,0,0.25)] transition-all"
           >
             + New Task
           </button>

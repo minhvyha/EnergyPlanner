@@ -23,7 +23,7 @@ export default function MyWeekScreen() {
           </div>
 
         {/* Week Overview */}
-        <div className="bg-white border-[3px] border-black rounded-[24px] p-5 mb-6 ">
+        <div className="bg-white border-[3px] border-black rounded-2xl p-5 mb-6 ">
           <div className="flex justify-around">
             {weekData.map((item, index) => (
               <div key={index} className="flex flex-col items-center gap-2">
@@ -52,7 +52,7 @@ export default function MyWeekScreen() {
         {/* Task Breakdown Chart */}
         <div className="mb-6">
           <h3 className="text-xl font-bold text-black mb-4">Task Breakdown</h3>
-          <div className="bg-white border-[3px] border-black rounded-[24px] p-6 ">
+          <div className="bg-white border-[3px] border-black rounded-2xl p-6 ">
             <div className="flex items-end justify-around h-48 gap-2">
               {taskBreakdown.map((value, index) => {
                 const height = (value / 5) * 100

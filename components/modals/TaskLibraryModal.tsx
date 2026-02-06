@@ -26,7 +26,7 @@ export default function TaskLibraryModal({ onClose, tasks, onAddToFocus }: TaskL
         {/* Task list */}
         <div className="px-4 pb-6 space-y-4">
           {tasks.length === 0 ? (
-            <p className="text-gray-500 text-center py-8">
+            <p className="text-[#909090] text-center py-8">
               No tasks in library. Create tasks to see them here.
             </p>
           ) : (
@@ -36,7 +36,7 @@ export default function TaskLibraryModal({ onClose, tasks, onAddToFocus }: TaskL
                 className="bg-white rounded-[20px] border-[3px] border-black p-4 "
               >
                 <h3 className="font-bold text-black text-base mb-1">{task.title}</h3>
-                <p className="text-sm text-gray-500 mb-3">
+                <p className="text-sm text-[#909090] mb-3">
                   {task.duration}
                   {task.subject && ` | ${task.subject}`}
                 </p>

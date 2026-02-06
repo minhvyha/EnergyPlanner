@@ -29,7 +29,7 @@ export default function EnergyBadge({ level }: EnergyBadgeProps) {
 
   return (
     <div
-      className={`inline-flex items-center gap-1.5 px-3 py-1.5 ${bg} border-3 rounded-full`}
+      className={`inline-flex items-center gap-1 px-2 py-1.5 ${bg} border-3 rounded-full`}
       style={{ borderColor: config[level].iconColor }}
     >
       <BoltIcon style={{ color: config[level].iconColor }} fontSize="small" />

@@ -56,7 +56,7 @@ export default function EnergyUpdateModal({ onClose, onUpdate }: EnergyUpdateMod
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white border-[3px] border-black rounded-[24px] p-6 w-full max-w-sm shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+      <div className="bg-white border-[3px] border-black rounded-2xl p-6 w-full max-w-sm ">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-bold text-black text-center flex-1">
             How's your energy right now?
@@ -84,7 +84,7 @@ export default function EnergyUpdateModal({ onClose, onUpdate }: EnergyUpdateMod
               onChange={(e) => setMentalFocus(Number(e.target.value))}
               className="w-full h-2 bg-gray-300 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#FDE047] [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-black [&::-webkit-slider-thumb]:cursor-pointer"
             />
-            <div className="flex justify-between text-xs text-gray-500 mt-2">
+            <div className="flex justify-between text-xs text-[#909090] mt-2">
               <span>LOW</span>
               <span>HIGH</span>
             </div>
@@ -104,7 +104,7 @@ export default function EnergyUpdateModal({ onClose, onUpdate }: EnergyUpdateMod
               onChange={(e) => setPhysicalEnergy(Number(e.target.value))}
               className="w-full h-2 bg-gray-300 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#FDE047] [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-black [&::-webkit-slider-thumb]:cursor-pointer"
             />
-            <div className="flex justify-between text-xs text-gray-500 mt-2">
+            <div className="flex justify-between text-xs text-[#909090] mt-2">
               <span>LOW</span>
               <span>HIGH</span>
             </div>
@@ -124,7 +124,7 @@ export default function EnergyUpdateModal({ onClose, onUpdate }: EnergyUpdateMod
               onChange={(e) => setEmotionalBandwidth(Number(e.target.value))}
               className="w-full h-2 bg-gray-300 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#FDE047] [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-black [&::-webkit-slider-thumb]:cursor-pointer"
             />
-            <div className="flex justify-between text-xs text-gray-500 mt-2">
+            <div className="flex justify-between text-xs text-[#909090] mt-2">
               <span>LOW</span>
               <span>HIGH</span>
             </div>

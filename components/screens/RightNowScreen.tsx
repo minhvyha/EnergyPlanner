@@ -5,13 +5,14 @@ import Header from "@/components/Header";
 import EnergyUpdateModal from "@/components/modals/EnergyUpdateModal";
 import { storage, type Task } from "@/lib/storage";
 import { BatteryLow, BatteryMedium, BatteryFull } from "lucide-react";
+import EnergyBadge from "@/components/EnergyBadge";
 
 const ENERGY_MAP = { LOW: "low", MED: "med", HIGH: "high" } as const;
 type EnergyState = "LOW" | "MED" | "HIGH";
 
 export default function RightNowScreen() {
   const [showEnergyModal, setShowEnergyModal] = useState(false);
-  const [energyLevel, setEnergyLevel] = useState<EnergyState>("LOW");
+  const [energyLevel, setEnergyLevel] = useState<EnergyState>("MED");
   const [suggestedTasks, setSuggestedTasks] = useState<Task[]>([]);
 
   // Load energy level once on mount and normalize value from storage
@@ -55,7 +56,7 @@ export default function RightNowScreen() {
           </div>
 
           {/* Energy Level Card */}
-          <div className="bg-white border-[3px] border-black rounded-[24px] p-5 mb-6 ">
+          <div className="bg-white border-[3px] border-black rounded-2xl p-5 mb-6 ">
             <p className="text-[#909090]  font-medium mb-2">
               Current Energy Level
             </p>
@@ -103,7 +104,15 @@ export default function RightNowScreen() {
             <h3 className="text-xl font-bold text-black mb-2">
               Focus for this energy:
             </h3>
-            <p className="text-gray-600 text-lg">Light review and admin</p>
+            {energyLevel === "LOW" && (
+              <p className=" font-medium text-lg">Light review and admin</p>
+            )}
+            {energyLevel === "MED" && (
+              <p className=" font-medium text-lg">Moderate tasks and focused work</p>
+            )}
+            {energyLevel === "HIGH" && (
+              <p className=" font-medium text-lg">High-intensity tasks and deep focus</p>
+            )}
           </div>
 
           {/* Suggested Tasks */}
@@ -112,7 +121,7 @@ export default function RightNowScreen() {
               Suggested Tasks
             </h3>
             {suggestedTasks.length === 0 ? (
-              <p className="text-gray-500 text-center ">
+              <p className="text-[#909090] text-center ">
                 No tasks available. Create tasks in the Task Library to see
                 suggestions here.
               </p>
@@ -121,46 +130,16 @@ export default function RightNowScreen() {
                 {suggestedTasks.map((task) => (
                   <div
                     key={task.id}
-                    className="bg-white border-[3px] border-black rounded-[24px] p-5 "
+                    className="bg-white border-[3px] border-black rounded-2xl p-5 "
                   >
                     <h4 className="text-lg font-bold text-black mb-2">
                       {task.title}
                     </h4>
-                    <p className="text-gray-500 text-sm mb-3">
+                    <p className="text-[#909090] text-sm mb-2">
                       {task.duration} {task.subject && `| ${task.subject}`}
                     </p>
                     <div className="flex items-center justify-between">
-                      <div
-                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 ${
-                          task.energyLevel === "low"
-                            ? "bg-[#95E9C1]"
-                            : task.energyLevel === "med"
-                              ? "bg-[#FDE047]"
-                              : "bg-[#FF5A7C]"
-                        } border-[2px] border-black rounded-full`}
-                      >
-                        <svg
-                          width="12"
-                          height="14"
-                          viewBox="0 0 12 14"
-                          fill="none"
-                        >
-                          <path
-                            d="M6.5 1L1 8h5l-.5 5 5.5-7H6l.5-5z"
-                            fill="currentColor"
-                            className={
-                              task.energyLevel === "low"
-                                ? "text-[#95E9C1]"
-                                : task.energyLevel === "med"
-                                  ? "text-[#FDE047]"
-                                  : "text-[#FF5A7C]"
-                            }
-                          />
-                        </svg>
-                        <span className="text-xs font-bold text-black tracking-wide">
-                          {task.energyLevel.toUpperCase()}
-                        </span>
-                      </div>
+                      <EnergyBadge level={task.energyLevel} />
                       <button
                         onClick={() => {
                           storage.updateTask(task.id, { inFocus: true });
@@ -168,7 +147,7 @@ export default function RightNowScreen() {
                             suggestedTasks.filter((t) => t.id !== task.id),
                           );
                         }}
-                        className="px-4 py-2 bg-[#AA78CD] text-white text-sm font-bold rounded-full border-[2px] border-black hover:bg-[#9966bb] transition-colors"
+                        className="px-3 py-2 border-[#AA78CD] text-[#AA78CD] font-bold rounded-full border-[3px] bg-[#F5E7FF] hover:bg-[#9966bb] transition-colors"
                       >
                         + Add to My Focus
                       </button>

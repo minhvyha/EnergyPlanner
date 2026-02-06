@@ -38,7 +38,7 @@ export default function EditTaskModal({ task, onClose, onSave, onDelete }: EditT
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white border-[3px] border-black rounded-[24px] p-6 w-full max-w-sm shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] max-h-[90vh] overflow-y-auto">
+      <div className="bg-white border-[3px] border-black rounded-2xl p-6 w-full max-w-sm  max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-black">Edit Task</h2>
           <button
@@ -59,7 +59,7 @@ export default function EditTaskModal({ task, onClose, onSave, onDelete }: EditT
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full py-3 px-4 bg-white border-[3px] border-black rounded-[16px] text-black focus:outline-none focus:ring-2 focus:ring-black"
+              className="w-full py-3 px-4 bg-white border-[3px] border-black rounded-[16px] text-black focus:outline-none  focus:ring-black"
             />
           </div>
 
@@ -72,7 +72,7 @@ export default function EditTaskModal({ task, onClose, onSave, onDelete }: EditT
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={3}
-              className="w-full py-3 px-4 bg-white border-[3px] border-black rounded-[16px] text-black focus:outline-none focus:ring-2 focus:ring-black resize-none"
+              className="w-full py-3 px-4 bg-white border-[3px] border-black rounded-[16px] text-black focus:outline-none  focus:ring-black resize-none"
             />
           </div>
 
@@ -142,7 +142,7 @@ export default function EditTaskModal({ task, onClose, onSave, onDelete }: EditT
                   value={duration}
                   onChange={(e) => setDuration(e.target.value)}
                   placeholder="45 min"
-                  className="w-full py-3 pl-10 pr-4 bg-white border-[3px] border-black rounded-[16px] text-black placeholder:text-[#909090] focus:outline-none focus:ring-2 focus:ring-black"
+                  className="w-full py-3 pl-10 pr-4 bg-white border-[3px] border-black rounded-[16px] text-black placeholder:text-[#909090] focus:outline-none  focus:ring-black"
                 />
                 <svg width="16" height="16" viewBox="0 0 16 16" className="absolute left-3 top-1/2 -translate-y-1/2 text-[#909090]">
                   <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.5" fill="none"/>
@@ -159,7 +159,7 @@ export default function EditTaskModal({ task, onClose, onSave, onDelete }: EditT
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
                 placeholder="e.g. Math"
-                className="w-full py-3 px-4 bg-white border-[3px] border-black rounded-[16px] text-black placeholder:text-[#909090] focus:outline-none focus:ring-2 focus:ring-black"
+                className="w-full py-3 px-4 bg-white border-[3px] border-black rounded-[16px] text-black placeholder:text-[#909090] focus:outline-none  focus:ring-black"
               />
             </div>
           </div>

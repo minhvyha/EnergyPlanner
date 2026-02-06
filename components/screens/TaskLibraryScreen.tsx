@@ -93,7 +93,7 @@ export default function TaskLibraryScreen() {
               <input
                 type="text"
                 placeholder="Search tasks..."
-                className="w-full py-3 pl-5 pr-12 bg-white border-[3px] border-black rounded-[24px] text-black placeholder:text-[#909090] focus:outline-none focus:ring-2 focus:ring-black"
+                className="w-full py-3 pl-5 pr-12 bg-white border-[3px] border-black rounded-2xl text-black placeholder:text-[#909090] focus:outline-none  focus:ring-black"
               />
               <button className="absolute right-4 top-1/2 -translate-y-1/2">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -154,7 +154,7 @@ export default function TaskLibraryScreen() {
                 <button
                   onClick={handleAddSelectedToFocus}
                   disabled={selectedTasks.size === 0}
-                  className={`flex-1 bg-[#AA78CD] text-white font-bold py-3.5 px-6 rounded-[20px] border-[3px] border-black  hover:translate-y-0.5 hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all ${
+                  className={`flex-1 bg-[#F5E7FF] text-black font-bold py-3.5 px-6 rounded-[20px] border-[3px] border-black  hover:translate-y-0.5 hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,0.25)] transition-all ${
                     selectedTasks.size === 0
                       ? "opacity-50 cursor-not-allowed"
                       : ""
@@ -164,7 +164,7 @@ export default function TaskLibraryScreen() {
                 </button>
                 <button
                   onClick={handleCancelSelection}
-                  className="flex-1 bg-white text-black font-bold py-3.5 px-6 rounded-[20px] border-[3px] border-black  hover:translate-y-0.5 hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all"
+                  className=" bg-[#FFE2E8] text-black font-bold py-3.5 px-4 rounded-[20px] border-[3px] border-black  hover:translate-y-0.5 shadow-[3px_3px_0px_0px_rgba(0,0,0,0.25)] transition-all"
                 >
                   Cancel
                 </button>
@@ -173,13 +173,13 @@ export default function TaskLibraryScreen() {
               <>
                 <button
                   onClick={() => setSelectionMode(true)}
-                  className="flex-1 bg-white text-black font-bold py-3.5 px-6 rounded-[20px] border-[3px] border-black  hover:translate-y-0.5 hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all"
+                  className="flex-1 bg-[#F5E7FF] text-black font-bold py-3.5 px-4 rounded-[20px] border-[3px] border-black  hover:translate-y-0.5 shadow-[3px_3px_0px_0px_rgba(0,0,0,0.25)] transition-all"
                 >
                   + My Focus
                 </button>
                 <button
                   onClick={() => setShowNewTaskModal(true)}
-                  className="flex-1 bg-[#FDE047] text-black font-bold py-3.5 px-6 rounded-[20px] border-[3px] border-black  hover:translate-y-0.5 hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all"
+                  className="flex-1 bg-[#FFF4BC] text-black font-bold py-3.5 px-4 rounded-[20px] border-[3px] border-black  hover:translate-y-0.5 shadow-[3px_3px_0px_0px_rgba(0,0,0,0.25)] transition-all"
                 >
                   + New Task
                 </button>
