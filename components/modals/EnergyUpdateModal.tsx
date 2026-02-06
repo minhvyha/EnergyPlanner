@@ -1,7 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-
+import PsychologyOutlinedIcon from '@mui/icons-material/PsychologyOutlined';
+import { Zap } from 'lucide-react';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 interface EnergyUpdateModalProps {
   onClose: () => void
   onUpdate: (level: 'LOW' | 'MED' | 'HIGH', values: { mental: number; physical: number; emotional: number }) => void
@@ -74,7 +76,7 @@ export default function EnergyUpdateModal({ onClose, onUpdate }: EnergyUpdateMod
           <div className="bg-gray-50 border-[3px] border-black rounded-[20px] p-4">
             <div className="flex items-center justify-between mb-3">
               <h3 className="font-bold text-black">Mental Focus</h3>
-              <span className="text-2xl">🧠</span>
+              <PsychologyOutlinedIcon className="text-2xl" />
             </div>
             <input
               type="range"
@@ -94,7 +96,7 @@ export default function EnergyUpdateModal({ onClose, onUpdate }: EnergyUpdateMod
           <div className="bg-gray-50 border-[3px] border-black rounded-[20px] p-4">
             <div className="flex items-center justify-between mb-3">
               <h3 className="font-bold text-black">Physical Energy</h3>
-              <span className="text-2xl">⚡</span>
+              <Zap className="text-2xl" />
             </div>
             <input
               type="range"
@@ -114,7 +116,7 @@ export default function EnergyUpdateModal({ onClose, onUpdate }: EnergyUpdateMod
           <div className="bg-gray-50 border-[3px] border-black rounded-[20px] p-4">
             <div className="flex items-center justify-between mb-3">
               <h3 className="font-bold text-black">Emotional Bandwidth</h3>
-              <span className="text-2xl">💪</span>
+              <FavoriteBorderOutlinedIcon className="text-2xl" />
             </div>
             <input
               type="range"
