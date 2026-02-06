@@ -18,7 +18,6 @@ export default function RightNowScreen() {
   // Load energy level once on mount and normalize value from storage
   useEffect(() => {
     const stored = storage.getEnergyLevels();
-    console.log("Loaded energy levels from storage:", stored);
     if (stored) {
       // Normalize stored.level to uppercase if needed
       const raw = (stored.level ?? stored).toString();

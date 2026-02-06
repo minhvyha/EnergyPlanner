@@ -1,3 +1,5 @@
+import { getDefaultTasksForEnergy } from './defaultTasks'
+
 export interface Task {
   id: number
   title: string
@@ -7,6 +9,8 @@ export interface Task {
   energyLevel: 'low' | 'med' | 'high'
   checked?: boolean
   inFocus?: boolean
+  isDefault?: boolean // <- new flag to mark generated default tasks
+
 }
 
 export interface EnergyLevels {
@@ -31,6 +35,7 @@ export interface WeekData {
 
 const WEEK_DATA_KEY = 'energy_planner_week_data'
 const CURRENT_DATE_KEY = 'energy_planner_current_date'
+const INITIALIZED_KEY = 'energy_planner_initialized'
 
 // Helper to get today's date string
 const getTodayString = (): string => {
@@ -91,38 +96,71 @@ const inferEnergyFromTasks = (tasks: Task[]) => {
   return { mental, physical, emotional }
 }
 
+// Helper: create default tasks for given numeric energy components and mark them as default
+const regenerateDefaultTasksForToday = (
+  mental: number,
+  physical: number,
+  emotional: number,
+): Task[] => {
+  const defaultTasks = getDefaultTasksForEnergy(mental, physical, emotional)
+  return defaultTasks.map(dt => ({
+    ...dt,
+    id: Date.now() + Math.random(),
+    checked: false,
+    inFocus: false,
+    isDefault: true,
+  }))
+}
+
 export const storage = {
-  // Check and reset if new day
+  // Check and reset if new day or first time app opens
   checkAndResetIfNewDay: () => {
     if (typeof window === 'undefined') return
 
+    const isFirstTime = !localStorage.getItem(INITIALIZED_KEY)
     const savedDate = localStorage.getItem(CURRENT_DATE_KEY)
     const today = getTodayString()
 
-    if (savedDate !== today) {
-      // New day detected - save yesterday's completed count to weekly data
-      const weekData = storage.getWeekData()
-      const todayData = storage.getTodayData()
+    if (isFirstTime || savedDate !== today) {
+      // New day or first-time opening detected
+      if (!isFirstTime) {
+        // New day: save yesterday's completed count to weekly data
+        const weekData = storage.getWeekData()
+        const todayData = storage.getTodayData()
 
-      if (savedDate && todayData.completedTaskCount > 0) {
-        weekData[savedDate] = todayData
-        storage.saveWeekData(weekData)
+        if (savedDate && todayData.completedTaskCount > 0) {
+          weekData[savedDate] = todayData
+          storage.saveWeekData(weekData)
+        }
       }
 
-      // Reset daily tasks but keep them unchecked for the new day
-      const tasks = todayData.tasks.map(task => ({ ...task, checked: false }))
+      // Get the last known energy level or use default
+      const todayData = storage.getTodayData()
+      const lastEnergyLevel = todayData.energyLevel ||
+        (todayData.energyCheckIns?.[todayData.energyCheckIns.length - 1]) ||
+        { mental: 5, physical: 5, emotional: 5, level: 'MED' as const, timestamp: Date.now() }
+
+      // Get default tasks based on energy levels and mark them as default
+      const newDayTasks = regenerateDefaultTasksForToday(
+        lastEnergyLevel.mental,
+        lastEnergyLevel.physical,
+        lastEnergyLevel.emotional,
+      )
+
       storage.saveTodayData({
         date: today,
-        tasks,
+        tasks: newDayTasks,
         completedTaskCount: 0,
         energyLevel: undefined,
+        energyCheckIns: [],
       })
 
       localStorage.setItem(CURRENT_DATE_KEY, today)
+      localStorage.setItem(INITIALIZED_KEY, 'true')
     }
   },
 
-  // Week data operations
+  // Week data operations (unchanged)
   getWeekData: (): WeekData => {
     if (typeof window === 'undefined') return {}
     const data = localStorage.getItem(WEEK_DATA_KEY)
@@ -161,6 +199,11 @@ export const storage = {
       dailyData.energyLevel.timestamp = Date.now()
     }
 
+    // Ensure completedTaskCount exists / is accurate
+    const tasksForCount = dailyData.tasks || []
+    const completedCount = tasksForCount.filter(task => task.checked && task.inFocus).length
+    dailyData.completedTaskCount = dailyData.completedTaskCount ?? completedCount
+
     const weekData = storage.getWeekData()
     weekData[dailyData.date] = dailyData
     storage.saveWeekData(weekData)
@@ -176,7 +219,6 @@ export const storage = {
     const todayData = storage.getTodayData()
     const completedCount = tasks.filter(task => task.checked && task.inFocus).length
 
-    // saveTodayData will recompute energyLevel if numeric components exist
     storage.saveTodayData({
       ...todayData,
       tasks,
@@ -189,27 +231,26 @@ export const storage = {
     const newTask = {
       ...task,
       id: Date.now(),
+      isDefault: task.isDefault ?? false, // user-added tasks should not be default
     }
     storage.saveTasks([...tasks, newTask])
     return newTask
   },
 
- // --- updateTask now infers and saves energy levels every time it's called ---
-updateTask: (id: number, updates: Partial<Task>) => {
-  const tasks = storage.getTasks()
-  const updatedTasks = tasks.map(task =>
-    task.id === id ? { ...task, ...updates } : task
-  )
-  // save tasks (this updates completedTaskCount etc)
-  storage.saveTasks(updatedTasks)
+  updateTask: (id: number, updates: Partial<Task>) => {
+    const tasks = storage.getTasks()
+    const updatedTasks = tasks.map(task =>
+      task.id === id ? { ...task, ...updates } : task
+    )
+    storage.saveTasks(updatedTasks)
 
-  // infer numeric energy components from the updated tasks and save them
-  const numericEnergy = inferEnergyFromTasks(updatedTasks)
+    // infer numeric energy components from the updated tasks and save them
+    const numericEnergy = inferEnergyFromTasks(updatedTasks)
 
-  // saveEnergyLevels expects an EnergyLevels object, but it will recompute canonical fields
-  // when numeric components are present. Cast to match the signature.
-  storage.saveEnergyLevels(numericEnergy as unknown as EnergyLevels)
-},
+    // saveEnergyLevels expects an EnergyLevels object, but it will recompute canonical fields
+    // when numeric components are present.
+    storage.saveEnergyLevels(numericEnergy as unknown as EnergyLevels)
+  },
 
   deleteTask: (id: number) => {
     const tasks = storage.getTasks()
@@ -224,29 +265,45 @@ updateTask: (id: number, updates: Partial<Task>) => {
   getEnergyLevels: (): EnergyLevels | null => {
     storage.checkAndResetIfNewDay()
     const todayData = storage.getTodayData()
-    
-    // Return the LATEST check-in (most recent) for display purposes
+
     if (todayData.energyCheckIns && todayData.energyCheckIns.length > 0) {
       return todayData.energyCheckIns[todayData.energyCheckIns.length - 1]
     }
-    
+
     return todayData.energyLevel || null
   },
 
   // Add a new energy check-in (supports multiple per day)
   addEnergyCheckIn: (energy: EnergyLevels) => {
     const todayData = storage.getTodayData()
-    
+
     const checkIn = computeEnergyLevel(energy.mental, energy.physical, energy.emotional)
-    
+
     const checkIns = todayData.energyCheckIns || []
     checkIns.push(checkIn)
-    
+
     // Calculate average of all check-ins for today
     const averagedEnergy = calculateAverageEnergy(checkIns)
-    
+
+    // Regenerate default tasks using averaged numeric components if available
+    let updatedTasks = todayData.tasks || []
+    if (averagedEnergy && typeof averagedEnergy.mental === 'number') {
+      const newDefaultTasks = regenerateDefaultTasksForToday(
+        averagedEnergy.mental,
+        averagedEnergy.physical,
+        averagedEnergy.emotional,
+      )
+      // remove old default tasks, keep user-created tasks
+      const userTasks = updatedTasks.filter(t => !t.isDefault)
+      updatedTasks = [...userTasks, ...newDefaultTasks]
+    }
+
+    const completedCount = updatedTasks.filter(task => task.checked && task.inFocus).length
+
     storage.saveTodayData({
       ...todayData,
+      tasks: updatedTasks,
+      completedTaskCount: completedCount,
       energyCheckIns: checkIns,
       energyLevel: averagedEnergy, // Store averaged value
     })
@@ -265,8 +322,24 @@ updateTask: (id: number, updates: Partial<Task>) => {
       toSave = { ...energy, timestamp: energy.timestamp || Date.now() }
     }
 
+    // If we have numeric components, regenerate default tasks
+    let updatedTasks = todayData.tasks || []
+    if (typeof energy.mental === 'number' && typeof energy.physical === 'number' && typeof energy.emotional === 'number') {
+      const newDefaultTasks = regenerateDefaultTasksForToday(
+        energy.mental,
+        energy.physical,
+        energy.emotional
+      )
+      const userTasks = updatedTasks.filter(t => !t.isDefault)
+      updatedTasks = [...userTasks, ...newDefaultTasks]
+    }
+
+    const completedCount = updatedTasks.filter(task => task.checked && task.inFocus).length
+
     storage.saveTodayData({
       ...todayData,
+      tasks: updatedTasks,
+      completedTaskCount: completedCount,
       energyLevel: toSave,
     })
   },
