@@ -82,7 +82,7 @@ export default function TaskLibraryScreen() {
       <div>
         <Header />
 
-        <div className="px-6">
+        <div className="px-8">
           <div className="flex items-center justify-center gap-3 mb-6">
             <h2 className="text-3xl font-bold text-black">Right Now</h2>
           </div>
@@ -93,7 +93,7 @@ export default function TaskLibraryScreen() {
               <input
                 type="text"
                 placeholder="Search tasks..."
-                className="w-full py-3 pl-5 pr-12 bg-white border-[3px] border-black rounded-[24px] text-black placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-black"
+                className="w-full py-3 pl-5 pr-12 bg-white border-[3px] border-black rounded-[24px] text-black placeholder:text-[#909090] focus:outline-none focus:ring-2 focus:ring-black"
               />
               <button className="absolute right-4 top-1/2 -translate-y-1/2">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -187,12 +187,6 @@ export default function TaskLibraryScreen() {
             )}
           </div>
 
-          {/* Decorative elements */}
-          <div className="fixed top-[440px] right-4 w-12 h-12 pointer-events-none">
-            <svg viewBox="0 0 50 50" fill="#FDE047">
-              <polygon points="25,2 30,18 47,18 33,28 38,44 25,34 12,44 17,28 3,18 20,18" />
-            </svg>
-          </div>
         </div>
       </div>
 
@@ -207,7 +201,7 @@ export default function TaskLibraryScreen() {
         <EditTaskModal
           task={tasks.find((t) => t.id === editingTask)!}
           onClose={() => setEditingTask(null)}
-          onSave={handleSaveTask}
+          onSave={(task: Task) => handleSaveTask(task)}
           onDelete={() => handleDeleteTask(editingTask)}
         />
       )}

@@ -17,7 +17,7 @@ export default function MyWeekScreen() {
     <div>
       <Header />
       
-      <div className="px-6">
+      <div className="px-8">
         <div className="flex items-center justify-center gap-3 mb-6">
             <h2 className="text-3xl font-bold text-black">Right Now</h2>
           </div>
@@ -73,13 +73,6 @@ export default function MyWeekScreen() {
           </div>
         </div>
 
-        {/* Decorative elements */}
-        <div className="fixed top-[420px] right-4 w-12 h-12 pointer-events-none">
-          <svg viewBox="0 0 50 50" fill="#FDE047">
-            <polygon points="25,2 30,18 47,18 33,28 38,44 25,34 12,44 17,28 3,18 20,18" />
-          </svg>
-        </div>
-        <div className="fixed bottom-32 left-4 w-16 h-16 bg-[#95E9C1] rounded-full opacity-50 pointer-events-none" />
       </div>
     </div>
   )

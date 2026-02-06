@@ -52,7 +52,7 @@ export default function EditTaskModal({ task, onClose, onSave, onDelete }: EditT
         <div className="space-y-4">
           {/* Task Name */}
           <div>
-            <label className="block text-xs font-medium text-gray-400 uppercase mb-2">
+            <label className="block text-xs font-medium text-[#909090] uppercase mb-2">
               Task Name
             </label>
             <input
@@ -65,7 +65,7 @@ export default function EditTaskModal({ task, onClose, onSave, onDelete }: EditT
 
           {/* Task Description */}
           <div>
-            <label className="block text-xs font-medium text-gray-400 uppercase mb-2">
+            <label className="block text-xs font-medium text-[#909090] uppercase mb-2">
               Task Description
             </label>
             <textarea
@@ -78,7 +78,7 @@ export default function EditTaskModal({ task, onClose, onSave, onDelete }: EditT
 
           {/* Required Energy */}
           <div>
-            <label className="block text-xs font-medium text-gray-400 uppercase mb-2">
+            <label className="block text-xs font-medium text-[#909090] uppercase mb-2">
               Required Energy
             </label>
             <div className="flex gap-3">
@@ -87,12 +87,12 @@ export default function EditTaskModal({ task, onClose, onSave, onDelete }: EditT
                 className={`flex-1 py-3 rounded-[16px] border-[3px] border-black font-bold transition-all ${
                   energyLevel === 'low'
                     ? 'bg-[#95E9C1] text-black '
-                    : 'bg-white text-gray-400'
+                    : 'bg-white text-[#909090]'
                 }`}
               >
                 <div className="flex items-center justify-center gap-1.5">
                   <svg width="12" height="14" viewBox="0 0 12 14" fill="none">
-                    <path d="M6.5 1L1 8h5l-.5 5 5.5-7H6l.5-5z" fill="currentColor" className={energyLevel === 'low' ? 'text-[#95E9C1]' : 'text-gray-400'} />
+                    <path d="M6.5 1L1 8h5l-.5 5 5.5-7H6l.5-5z" fill="currentColor" className={energyLevel === 'low' ? 'text-[#95E9C1]' : 'text-[#909090]'} />
                   </svg>
                   <span className="text-sm">LOW</span>
                 </div>
@@ -102,12 +102,12 @@ export default function EditTaskModal({ task, onClose, onSave, onDelete }: EditT
                 className={`flex-1 py-3 rounded-[16px] border-[3px] border-black font-bold transition-all ${
                   energyLevel === 'med'
                     ? 'bg-[#FDE047] text-black '
-                    : 'bg-white text-gray-400'
+                    : 'bg-white text-[#909090]'
                 }`}
               >
                 <div className="flex items-center justify-center gap-1.5">
                   <svg width="12" height="14" viewBox="0 0 12 14" fill="none">
-                    <path d="M6.5 1L1 8h5l-.5 5 5.5-7H6l.5-5z" fill="currentColor" className={energyLevel === 'med' ? 'text-[#FDE047]' : 'text-gray-400'} />
+                    <path d="M6.5 1L1 8h5l-.5 5 5.5-7H6l.5-5z" fill="currentColor" className={energyLevel === 'med' ? 'text-[#FDE047]' : 'text-[#909090]'} />
                   </svg>
                   <span className="text-sm">MED</span>
                 </div>
@@ -117,12 +117,12 @@ export default function EditTaskModal({ task, onClose, onSave, onDelete }: EditT
                 className={`flex-1 py-3 rounded-[16px] border-[3px] border-black font-bold transition-all ${
                   energyLevel === 'high'
                     ? 'bg-[#FF5A7C] text-white '
-                    : 'bg-white text-gray-400'
+                    : 'bg-white text-[#909090]'
                 }`}
               >
                 <div className="flex items-center justify-center gap-1.5">
                   <svg width="12" height="14" viewBox="0 0 12 14" fill="none">
-                    <path d="M6.5 1L1 8h5l-.5 5 5.5-7H6l.5-5z" fill="currentColor" className={energyLevel === 'high' ? 'text-[#FF5A7C]' : 'text-gray-400'} />
+                    <path d="M6.5 1L1 8h5l-.5 5 5.5-7H6l.5-5z" fill="currentColor" className={energyLevel === 'high' ? 'text-[#FF5A7C]' : 'text-[#909090]'} />
                   </svg>
                   <span className="text-sm">HIGH</span>
                 </div>
@@ -133,7 +133,7 @@ export default function EditTaskModal({ task, onClose, onSave, onDelete }: EditT
           {/* Estimated Time and Subject */}
           <div className="flex gap-3">
             <div className="flex-1">
-              <label className="block text-xs font-medium text-gray-400 uppercase mb-2">
+              <label className="block text-xs font-medium text-[#909090] uppercase mb-2">
                 Estimated Time
               </label>
               <div className="relative">
@@ -142,16 +142,16 @@ export default function EditTaskModal({ task, onClose, onSave, onDelete }: EditT
                   value={duration}
                   onChange={(e) => setDuration(e.target.value)}
                   placeholder="45 min"
-                  className="w-full py-3 pl-10 pr-4 bg-white border-[3px] border-black rounded-[16px] text-black placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-black"
+                  className="w-full py-3 pl-10 pr-4 bg-white border-[3px] border-black rounded-[16px] text-black placeholder:text-[#909090] focus:outline-none focus:ring-2 focus:ring-black"
                 />
-                <svg width="16" height="16" viewBox="0 0 16 16" className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                <svg width="16" height="16" viewBox="0 0 16 16" className="absolute left-3 top-1/2 -translate-y-1/2 text-[#909090]">
                   <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.5" fill="none"/>
                   <path d="M8 4v4l3 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
                 </svg>
               </div>
             </div>
             <div className="flex-1">
-              <label className="block text-xs font-medium text-gray-400 uppercase mb-2">
+              <label className="block text-xs font-medium text-[#909090] uppercase mb-2">
                 Subject
               </label>
               <input
@@ -159,7 +159,7 @@ export default function EditTaskModal({ task, onClose, onSave, onDelete }: EditT
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
                 placeholder="e.g. Math"
-                className="w-full py-3 px-4 bg-white border-[3px] border-black rounded-[16px] text-black placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-black"
+                className="w-full py-3 px-4 bg-white border-[3px] border-black rounded-[16px] text-black placeholder:text-[#909090] focus:outline-none focus:ring-2 focus:ring-black"
               />
             </div>
           </div>

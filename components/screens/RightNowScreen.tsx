@@ -49,14 +49,14 @@ export default function RightNowScreen() {
     <>
       <div>
         <Header />
-        <div className="px-6">
+        <div className="px-8">
           <div className="flex items-center justify-center gap-3 mb-6">
             <h2 className="text-3xl font-bold text-black">Right Now</h2>
           </div>
 
           {/* Energy Level Card */}
           <div className="bg-white border-[3px] border-black rounded-[24px] p-5 mb-6 ">
-            <p className="text-gray-400  font-medium mb-2">
+            <p className="text-[#909090]  font-medium mb-2">
               Current Energy Level
             </p>
             <div className="flex items-center justify-between">
@@ -75,7 +75,7 @@ export default function RightNowScreen() {
                     <BatteryFull className="text-[#95E9C1]" size={28} />
                   )}
                 </div>
-                <p className="text-gray-400 ">Take it easy today</p>
+                <p className="text-[#909090] ">Take it easy today</p>
               </div>
               <button
                 onClick={() => setShowEnergyModal(true)}
@@ -112,7 +112,7 @@ export default function RightNowScreen() {
               Suggested Tasks
             </h3>
             {suggestedTasks.length === 0 ? (
-              <p className="text-gray-500 text-center py-8">
+              <p className="text-gray-500 text-center ">
                 No tasks available. Create tasks in the Task Library to see
                 suggestions here.
               </p>
@@ -179,11 +179,6 @@ export default function RightNowScreen() {
             )}
           </div>
 
-          <div className="fixed top-[380px] right-4 w-12 h-12 pointer-events-none">
-            <svg viewBox="0 0 50 50" fill="#FDE047">
-              <polygon points="25,2 30,18 47,18 33,28 38,44 25,34 12,44 17,28 3,18 20,18" />
-            </svg>
-          </div>
         </div>
       </div>
 

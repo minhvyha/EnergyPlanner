@@ -56,7 +56,7 @@ export default function NewTaskModal({ onClose, onSave }: NewTaskModalProps) {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g. Biology Revision"
-              className="w-full py-3 px-4 bg-white border-[3px] border-black rounded-[16px] text-black placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-black"
+              className="w-full py-3 px-4 bg-white border-[3px] border-black rounded-[16px] text-black placeholder:text-[#909090] focus:outline-none focus:ring-2 focus:ring-black"
             />
           </div>
 
@@ -70,7 +70,7 @@ export default function NewTaskModal({ onClose, onSave }: NewTaskModalProps) {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="e.g. Revise Topics 1 & 2"
-              className="w-full py-3 px-4 bg-white border-[3px] border-black rounded-[16px] text-black placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-black"
+              className="w-full py-3 px-4 bg-white border-[3px] border-black rounded-[16px] text-black placeholder:text-[#909090] focus:outline-none focus:ring-2 focus:ring-black"
             />
           </div>
 
@@ -136,7 +136,7 @@ export default function NewTaskModal({ onClose, onSave }: NewTaskModalProps) {
                   value={duration}
                   onChange={(e) => setDuration(e.target.value)}
                   placeholder="45 min"
-                  className="w-full py-3 pl-10 pr-4 bg-white border-[3px] border-black rounded-[16px] text-black placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-black"
+                  className="w-full py-3 pl-10 pr-4 bg-white border-[3px] border-black rounded-[16px] text-black placeholder:text-[#909090] focus:outline-none focus:ring-2 focus:ring-black"
                 />
                 <svg
                   className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5"
@@ -160,7 +160,7 @@ export default function NewTaskModal({ onClose, onSave }: NewTaskModalProps) {
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
                 placeholder="e.g. Biology"
-                className="w-full py-3 px-4 bg-white border-[3px] border-black rounded-[16px] text-black placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-black"
+                className="w-full py-3 px-4 bg-white border-[3px] border-black rounded-[16px] text-black placeholder:text-[#909090] focus:outline-none focus:ring-2 focus:ring-black"
               />
             </div>
           </div>
