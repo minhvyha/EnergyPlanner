@@ -2,7 +2,7 @@
 
 import { ReactNode } from 'react'
 import EnergyBadge from './EnergyBadge'
-
+import {Zap} from 'lucide-react'
 interface TaskCardProps {
   title: string
   description?: string
