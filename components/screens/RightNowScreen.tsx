@@ -51,12 +51,12 @@ export default function RightNowScreen() {
       <div>
         <Header />
         <div className="px-8">
-          <div className="flex items-center justify-center gap-3 mb-6">
+          <div className="flex items-center justify-center gap-3 mb-4">
             <h2 className="text-3xl font-bold text-black">Right Now</h2>
           </div>
 
           {/* Energy Level Card */}
-          <div className="bg-white border-[3px] border-black rounded-2xl p-5 mb-6 ">
+          <div className="bg-white border-[3px] border-black rounded-2xl p-5 mb-4 ">
             <p className="text-[#909090]  font-medium mb-2">
               Current Energy Level
             </p>
@@ -100,7 +100,7 @@ export default function RightNowScreen() {
           </div>
 
           {/* Focus Section */}
-          <div className="mb-6">
+          <div className="mb-4">
             <h3 className="text-xl font-bold text-black mb-2">
               Focus for this energy:
             </h3>
@@ -116,7 +116,7 @@ export default function RightNowScreen() {
           </div>
 
           {/* Suggested Tasks */}
-          <div className="mb-6">
+          <div className="mb-4">
             <h3 className="text-xl font-bold text-black mb-4">
               Suggested Tasks
             </h3>

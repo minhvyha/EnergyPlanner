@@ -36,7 +36,7 @@ export default function NewTaskModal({ onClose, onSave }: NewTaskModalProps) {
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4 ">
       <div className="bg-white items-center flex flex-col border-4 border-black rounded-2xl px-8 py-12 w-full max-w-sm  max-h-[90vh] overflow-y-auto">
-        <div className="flex w-full justify-between items-center mb-6">
+        <div className="flex w-full justify-between items-center mb-4">
           <h2 className="text-xl font-bold text-black">New Task</h2>
           <button
             onClick={onClose}

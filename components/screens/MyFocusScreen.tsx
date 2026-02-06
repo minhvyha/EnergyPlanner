@@ -56,11 +56,11 @@ export default function MyFocusScreen() {
         <Header />
       </div>
       <div className="px-8">
-        <div className="flex items-center justify-center gap-3 mb-6">
+        <div className="flex items-center justify-center gap-3 mb-4">
             <h2 className="text-3xl font-bold text-black">Right Now</h2>
           </div>
 
-        <div className="mb-6">
+        <div className="mb-4">
           <h3 className="text-xl font-bold text-black mb-4">Task List</h3>
           <div className="space-y-4">
             {tasks.map((task) => (

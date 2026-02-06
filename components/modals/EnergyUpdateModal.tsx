@@ -57,7 +57,7 @@ export default function EnergyUpdateModal({ onClose, onUpdate }: EnergyUpdateMod
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
       <div className="bg-white border-[3px] border-black rounded-2xl p-6 w-full max-w-sm ">
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold text-black text-center flex-1">
             How's your energy right now?
           </h2>

@@ -1,5 +1,7 @@
 'use client';
 
+import { Crosshair, List, Calendar, CalendarCheck } from "lucide-react";
+
 type Screen = 'today' | 'tasks' | 'focus' | 'week'
 
 interface BottomNavProps {
@@ -15,11 +17,7 @@ export default function BottomNav({ activeScreen, onScreenChange }: BottomNavPro
           onClick={() => onScreenChange('today')}
           className="flex flex-col items-center gap-1 min-w-[60px]"
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className={activeScreen === 'today' ? 'text-[#FDE047]' : 'text-[#909090]'}>
-            <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="2"/>
-            <path d="M16 2v4M8 2v4M3 10h18" stroke="currentColor" strokeWidth="2"/>
-            <path d="M8 14h2v2H8zM12 14h2v2h-2z" fill="currentColor"/>
-          </svg>
+          <CalendarCheck className={activeScreen === 'today' ? 'text-[#FDE047]' : 'text-[#909090]'} size={24} />
           <span className={`text-xs font-medium uppercase ${activeScreen === 'today' ? 'text-[#FDE047]' : 'text-[#909090]'}`}>
             Today
           </span>
@@ -29,12 +27,7 @@ export default function BottomNav({ activeScreen, onScreenChange }: BottomNavPro
           onClick={() => onScreenChange('tasks')}
           className="flex flex-col items-center gap-1 min-w-[60px]"
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className={activeScreen === 'tasks' ? 'text-[#FDE047]' : 'text-[#909090]'}>
-            <circle cx="6" cy="6" r="2" fill="currentColor"/>
-            <circle cx="6" cy="12" r="2" fill="currentColor"/>
-            <circle cx="6" cy="18" r="2" fill="currentColor"/>
-            <path d="M12 6h8M12 12h8M12 18h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-          </svg>
+          <List className={activeScreen === 'tasks' ? 'text-[#FDE047]' : 'text-[#909090]'} size={24} />
           <span className={`text-xs font-medium uppercase ${activeScreen === 'tasks' ? 'text-[#FDE047]' : 'text-[#909090]'}`}>
             Tasks
           </span>
@@ -44,10 +37,7 @@ export default function BottomNav({ activeScreen, onScreenChange }: BottomNavPro
           onClick={() => onScreenChange('focus')}
           className="flex flex-col items-center gap-1 min-w-[60px]"
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className={activeScreen === 'focus' ? 'text-[#FDE047]' : 'text-[#909090]'}>
-            <circle cx="12" cy="12" r="3" fill="currentColor"/>
-            <circle cx="12" cy="12" r="8" stroke="currentColor" strokeWidth="2"/>
-          </svg>
+          <Crosshair className={activeScreen === 'focus' ? 'text-[#FDE047]' : 'text-[#909090]'} size={24} />
           <span className={`text-xs font-medium uppercase ${activeScreen === 'focus' ? 'text-[#FDE047]' : 'text-[#909090]'}`}>
             Focus
           </span>
@@ -57,10 +47,7 @@ export default function BottomNav({ activeScreen, onScreenChange }: BottomNavPro
           onClick={() => onScreenChange('week')}
           className="flex flex-col items-center gap-1 min-w-[60px]"
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className={activeScreen === 'week' ? 'text-[#FDE047]' : 'text-[#909090]'}>
-            <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="2"/>
-            <path d="M3 10h18M8 2v4M16 2v4" stroke="currentColor" strokeWidth="2"/>
-          </svg>
+          <Calendar className={activeScreen === 'week' ? 'text-[#FDE047]' : 'text-[#909090]'} size={24} />
           <span className={`text-xs font-medium uppercase ${activeScreen === 'week' ? 'text-[#FDE047]' : 'text-[#909090]'}`}>
             Week
           </span>

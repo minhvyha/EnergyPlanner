@@ -6,7 +6,9 @@ import TaskCard from "@/components/TaskCard";
 import SortModal from "@/components/modals/SortModal";
 import EditTaskModal from "@/components/modals/EditTaskModal";
 import NewTaskModal from "@/components/modals/NewTaskModal";
+import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
 import { storage, type Task } from "@/lib/storage";
+import { Search } from "lucide-react";
 
 export default function TaskLibraryScreen() {
   const [showSortModal, setShowSortModal] = useState(false);
@@ -83,50 +85,32 @@ export default function TaskLibraryScreen() {
         <Header />
 
         <div className="px-8">
-          <div className="flex items-center justify-center gap-3 mb-6">
+          <div className="flex items-center justify-center gap-3 mb-4">
             <h2 className="text-3xl font-bold text-black">Right Now</h2>
           </div>
 
           {/* Search and Filter */}
-          <div className="flex gap-3 mb-6">
+          <div className="flex gap-3 mb-4">
             <div className="flex-1 relative">
               <input
                 type="text"
                 placeholder="Search tasks..."
-                className="w-full py-3 pl-5 pr-12 bg-white border-[3px] border-black rounded-2xl text-black placeholder:text-[#909090] focus:outline-none  focus:ring-black"
+                className="w-full py-3 pl-5 pr-12 bg-white border-[3px] border-black rounded-full text-black placeholder:text-[#909090] focus:outline-none  shadow-[3px_3px_0px_0px_rgba(0,0,0,0.25)]  transition-all"
               />
               <button className="absolute right-4 top-1/2 -translate-y-1/2">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <circle cx="8" cy="8" r="6" stroke="black" strokeWidth="2" />
-                  <path
-                    d="M12 12l5 5"
-                    stroke="black"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                </svg>
+                <Search style={{ color: '#909090' }} />
               </button>
             </div>
             <button
               onClick={() => setShowSortModal(true)}
-              className="w-14 h-14 bg-white border-[3px] border-black rounded-full flex items-center justify-center  hover:translate-y-0.5 hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all"
+              className="w-14 h-14 bg-white border-[3px] border-black rounded-full flex items-center justify-center  hover:translate-y-0.5 shadow-[3px_3px_0px_0px_rgba(0,0,0,0.25)] transition-all"
             >
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path
-                  d="M3 4h14M5 10h10M7 16h6"
-                  stroke="black"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-                <circle cx="17" cy="4" r="2" fill="black" />
-                <circle cx="15" cy="10" r="2" fill="black" />
-                <circle cx="13" cy="16" r="2" fill="black" />
-              </svg>
+              <FilterAltOutlinedIcon style={{ color: '#909090' }} />
             </button>
           </div>
 
           {/* Task List */}
-          <div className="space-y-4 mb-6">
+          <div className="space-y-4 mb-4">
             {tasks.map((task) => (
               <div
                 key={task.id}
