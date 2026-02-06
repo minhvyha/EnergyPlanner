@@ -88,7 +88,15 @@ export default function RightNowScreen() {
                     <BatteryFull className="text-[#95E9C1]" size={28} />
                   )}
                 </div>
-                <p className="text-[#909090] ">Take it easy today</p>
+                {energyLevel === "LOW" && (
+                  <p className="text-[#FF5A7C] font-bold">Take it easy today</p>
+                )}
+                {energyLevel === "MED" && (
+                  <p className="text-[#FDE047] font-bold">Maintain steady progress</p>
+                )}
+                {energyLevel === "HIGH" && (
+                  <p className="text-[#95E9C1] font-bold">Maximize your productivity</p>
+                )}
               </div>
               <button
                 onClick={() => setShowEnergyModal(true)}

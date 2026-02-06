@@ -86,7 +86,7 @@ export default function TaskLibraryScreen() {
 
         <div className="px-8">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <h2 className="text-3xl font-bold text-black">Right Now</h2>
+            <h2 className="text-3xl font-bold text-black">Task Library</h2>
           </div>
 
           {/* Search and Filter */}

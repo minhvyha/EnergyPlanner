@@ -57,7 +57,7 @@ export default function MyFocusScreen() {
       </div>
       <div className="px-8">
         <div className="flex items-center justify-center gap-3 mb-4">
-            <h2 className="text-3xl font-bold text-black">Right Now</h2>
+            <h2 className="text-3xl font-bold text-black">My Focus</h2>
           </div>
 
         <div className="mb-4">
