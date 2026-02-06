@@ -18,6 +18,7 @@ export default function RightNowScreen() {
   // Load energy level once on mount and normalize value from storage
   useEffect(() => {
     const stored = storage.getEnergyLevels();
+    console.log("Loaded energy levels from storage:", stored);
     if (stored) {
       // Normalize stored.level to uppercase if needed
       const raw = (stored.level ?? stored).toString();
@@ -40,10 +41,21 @@ export default function RightNowScreen() {
   // Recompute suggested tasks whenever energyLevel changes
   useEffect(() => {
     const allTasks = storage.getTasks();
-    const filtered = allTasks.filter(
-      (task) => task.energyLevel === ENERGY_MAP[energyLevel] && !task.inFocus,
-    );
-    setSuggestedTasks(filtered.slice(0, 5));
+    if(energyLevel === "HIGH") {
+      setSuggestedTasks(allTasks)
+    } else if(energyLevel === "MED") {
+      const filtered = allTasks.filter(
+        (task) =>
+          (task.energyLevel === "med" || task.energyLevel === "low") && !task.inFocus,
+      );
+      setSuggestedTasks(filtered.slice(0, 5));
+    } else if(energyLevel === "LOW") {
+      const filtered = allTasks.filter(
+        (task) => task.energyLevel === "low" && !task.inFocus,
+      );
+      setSuggestedTasks(filtered.slice(0, 5));
+    }
+
   }, [energyLevel]);
 
   return (

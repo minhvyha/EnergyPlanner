@@ -12,6 +12,7 @@ export default function MyWeekScreen() {
   useEffect(() => {
     const stats = storage.getWeekStats()
     setWeekStats(stats)
+    console.log('Loaded week stats:', stats)
 
   }, [])
 
@@ -84,9 +85,9 @@ export default function MyWeekScreen() {
             {/* grid with chart area and labels row */}
             <div className="grid grid-rows-[1fr_auto]">
               {/* Chart area */}
-              <div className="relative flex items-end justify-center gap-2 h-40 px-4">
+              <div className="relative flex items-end justify-center gap-2 h-40">
                 {/* Baseline (the border between chart and labels) */}
-                <div className="absolute left-4 right-4 bottom-0 border-t-[3px] border-black" />
+                <div className="absolute left-0 right-0 bottom-0 border-t-[3px] border-black" />
 
                 {/* Bars (each column is a fixed width so labels below align) */}
                 {weekStats.map((stat, index) => {
@@ -127,7 +128,7 @@ export default function MyWeekScreen() {
               </div>
 
               {/* Labels row - sits below the baseline */}
-              <div className="flex justify-center gap-2 px-4 mt-2">
+              <div className="flex justify-center gap-2 mt-2">
                 {weekStats.map((stat, index) => (
                   <div key={index} className="w-7 text-center font-bold text-sm text-black">
                     {stat.day}

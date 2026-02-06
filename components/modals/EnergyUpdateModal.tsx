@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import PsychologyOutlinedIcon from '@mui/icons-material/PsychologyOutlined';
 import { Zap } from 'lucide-react';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import { storage } from '@/lib/storage';
 interface EnergyUpdateModalProps {
   onClose: () => void
   onUpdate: (level: 'LOW' | 'MED' | 'HIGH', values: { mental: number; physical: number; emotional: number }) => void
@@ -17,12 +18,11 @@ export default function EnergyUpdateModal({ onClose, onUpdate }: EnergyUpdateMod
   // Load saved energy levels on mount
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('energyLevels')
+      const saved = storage.getEnergyLevels()
       if (saved) {
-        const data = JSON.parse(saved)
-        setMentalFocus(data.mental || 50)
-        setPhysicalEnergy(data.physical || 50)
-        setEmotionalBandwidth(data.emotional || 50)
+        setMentalFocus(saved.mental || 50)
+        setPhysicalEnergy(saved.physical || 50)
+        setEmotionalBandwidth(saved.emotional || 50)
       }
     }
   }, [])
@@ -40,13 +40,13 @@ export default function EnergyUpdateModal({ onClose, onUpdate }: EnergyUpdateMod
     
     // Save to localStorage
     if (typeof window !== 'undefined') {
-      localStorage.setItem('energyLevels', JSON.stringify({
+      storage.saveEnergyLevels({
         mental: mentalFocus,
         physical: physicalEnergy,
         emotional: emotionalBandwidth,
         level,
         timestamp: Date.now()
-      }))
+      })
     }
     
     onUpdate(level, {
