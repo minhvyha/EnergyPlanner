@@ -22,6 +22,7 @@ export interface DailyData {
   tasks: Task[]
   completedTaskCount: number
   energyLevel?: EnergyLevels
+  energyCheckIns?: EnergyLevels[] // Track multiple check-ins per day
 }
 
 export interface WeekData {
@@ -44,11 +45,11 @@ const getWeekStart = (date: Date): string => {
   const monday = new Date(date.setDate(diff))
   return monday.toISOString().split('T')[0]
 }
-// Helper: compute overall level from numeric components
+// Helper: compute overall level from numeric components (10-bar scale)
 const computeEnergyLevel = (mental: number, physical: number, emotional: number): EnergyLevels => {
-  const avg = Math.round((mental + physical + emotional) / 3)
-  // Thresholds — adjust to your scale if needed (currently assumes 0-100)
-  const level: EnergyLevels['level'] = avg >= 70 ? 'HIGH' : avg >= 40 ? 'MED' : 'LOW'
+  const totalScore = mental + physical + emotional
+  // Thresholds based on cumulative 10-bar scale (0-30 range)
+  const level: EnergyLevels['level'] = totalScore <= 10 ? 'LOW' : totalScore <= 20 ? 'MED' : 'HIGH'
 
   return {
     mental,
@@ -57,6 +58,17 @@ const computeEnergyLevel = (mental: number, physical: number, emotional: number)
     level,
     timestamp: Date.now(),
   }
+}
+
+// Helper: calculate average energy level from multiple check-ins
+const calculateAverageEnergy = (checkIns: EnergyLevels[]): EnergyLevels | undefined => {
+  if (!checkIns || checkIns.length === 0) return undefined
+  
+  const avgMental = Math.round(checkIns.reduce((sum, c) => sum + c.mental, 0) / checkIns.length)
+  const avgPhysical = Math.round(checkIns.reduce((sum, c) => sum + c.physical, 0) / checkIns.length)
+  const avgEmotional = Math.round(checkIns.reduce((sum, c) => sum + c.emotional, 0) / checkIns.length)
+  
+  return computeEnergyLevel(avgMental, avgPhysical, avgEmotional)
 }
 const inferEnergyFromTasks = (tasks: Task[]) => {
   const totalTasks = tasks.length
@@ -69,12 +81,12 @@ const inferEnergyFromTasks = (tasks: Task[]) => {
     ? (completedFocused / totalFocus)
     : (totalTasks > 0 ? (completedAny / totalTasks) : 0)
 
-  const score = Math.round(ratio * 100) // 0..100
+  const score = Math.round(ratio * 10) // 0..10 (10-bar scale)
 
   // derive three components from the single score with small offsets to make them not identical
-  const mental = Math.max(0, Math.min(100, score))
-  const physical = Math.max(0, Math.min(100, score - 10)) // slightly lower
-  const emotional = Math.max(0, Math.min(100, score + 5)) // slightly higher
+  const mental = Math.max(0, Math.min(10, score))
+  const physical = Math.max(0, Math.min(10, score - 1)) // slightly lower
+  const emotional = Math.max(0, Math.min(10, score + 1)) // slightly higher
 
   return { mental, physical, emotional }
 }
@@ -114,7 +126,6 @@ export const storage = {
   getWeekData: (): WeekData => {
     if (typeof window === 'undefined') return {}
     const data = localStorage.getItem(WEEK_DATA_KEY)
-    console.log('Loaded week data from storage:', JSON.parse(data))
     return data ? JSON.parse(data) : {}
   },
 
@@ -212,8 +223,33 @@ updateTask: (id: number, updates: Partial<Task>) => {
   // Energy operations
   getEnergyLevels: (): EnergyLevels | null => {
     storage.checkAndResetIfNewDay()
+    const todayData = storage.getTodayData()
+    
+    // Return the LATEST check-in (most recent) for display purposes
+    if (todayData.energyCheckIns && todayData.energyCheckIns.length > 0) {
+      return todayData.energyCheckIns[todayData.energyCheckIns.length - 1]
+    }
+    
+    return todayData.energyLevel || null
+  },
 
-    return storage.getTodayData().energyLevel || null
+  // Add a new energy check-in (supports multiple per day)
+  addEnergyCheckIn: (energy: EnergyLevels) => {
+    const todayData = storage.getTodayData()
+    
+    const checkIn = computeEnergyLevel(energy.mental, energy.physical, energy.emotional)
+    
+    const checkIns = todayData.energyCheckIns || []
+    checkIns.push(checkIn)
+    
+    // Calculate average of all check-ins for today
+    const averagedEnergy = calculateAverageEnergy(checkIns)
+    
+    storage.saveTodayData({
+      ...todayData,
+      energyCheckIns: checkIns,
+      energyLevel: averagedEnergy, // Store averaged value
+    })
   },
 
   // Accept raw EnergyLevels (with numeric components) or a precomputed one.

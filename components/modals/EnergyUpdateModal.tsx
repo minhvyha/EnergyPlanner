@@ -11,36 +11,39 @@ interface EnergyUpdateModalProps {
 }
 
 export default function EnergyUpdateModal({ onClose, onUpdate }: EnergyUpdateModalProps) {
-  const [mentalFocus, setMentalFocus] = useState(50)
-  const [physicalEnergy, setPhysicalEnergy] = useState(50)
-  const [emotionalBandwidth, setEmotionalBandwidth] = useState(50)
+  const [mentalFocus, setMentalFocus] = useState(5)
+  const [physicalEnergy, setPhysicalEnergy] = useState(5)
+  const [emotionalBandwidth, setEmotionalBandwidth] = useState(5)
 
-  // Load saved energy levels on mount
+  // Load saved energy levels on mount (last check-in values)
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const saved = storage.getEnergyLevels()
       if (saved) {
-        setMentalFocus(saved.mental || 50)
-        setPhysicalEnergy(saved.physical || 50)
-        setEmotionalBandwidth(saved.emotional || 50)
+        setMentalFocus(saved.mental || 5)
+        setPhysicalEnergy(saved.physical || 5)
+        setEmotionalBandwidth(saved.emotional || 5)
       }
     }
   }, [])
 
   const handleUpdate = () => {
-    const average = (mentalFocus + physicalEnergy + emotionalBandwidth) / 3
+    // Sum the three 10-bar values (range: 0-30)
+    const totalScore = mentalFocus + physicalEnergy + emotionalBandwidth
+    
+    // Determine energy level based on cumulative score
     let level: 'LOW' | 'MED' | 'HIGH'
-    if (average < 33) {
+    if (totalScore <= 10) {
       level = 'LOW'
-    } else if (average < 67) {
+    } else if (totalScore <= 20) {
       level = 'MED'
     } else {
       level = 'HIGH'
     }
     
-    // Save to localStorage
+    // Save to localStorage with check-in tracking
     if (typeof window !== 'undefined') {
-      storage.saveEnergyLevels({
+      storage.addEnergyCheckIn({
         mental: mentalFocus,
         physical: physicalEnergy,
         emotional: emotionalBandwidth,
@@ -81,14 +84,15 @@ export default function EnergyUpdateModal({ onClose, onUpdate }: EnergyUpdateMod
             <input
               type="range"
               min="0"
-              max="100"
+              max="10"
               value={mentalFocus}
               onChange={(e) => setMentalFocus(Number(e.target.value))}
               className="w-full h-2 bg-gray-300 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#FDE047] [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-black [&::-webkit-slider-thumb]:cursor-pointer"
             />
             <div className="flex justify-between text-xs text-[#909090] mt-2">
-              <span>LOW</span>
-              <span>HIGH</span>
+              <span>0</span>
+              <span className="font-bold text-black">{mentalFocus}</span>
+              <span>10</span>
             </div>
           </div>
 
@@ -101,14 +105,15 @@ export default function EnergyUpdateModal({ onClose, onUpdate }: EnergyUpdateMod
             <input
               type="range"
               min="0"
-              max="100"
+              max="10"
               value={physicalEnergy}
               onChange={(e) => setPhysicalEnergy(Number(e.target.value))}
               className="w-full h-2 bg-gray-300 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#FDE047] [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-black [&::-webkit-slider-thumb]:cursor-pointer"
             />
             <div className="flex justify-between text-xs text-[#909090] mt-2">
-              <span>LOW</span>
-              <span>HIGH</span>
+              <span>0</span>
+              <span className="font-bold text-black">{physicalEnergy}</span>
+              <span>10</span>
             </div>
           </div>
 
@@ -121,14 +126,15 @@ export default function EnergyUpdateModal({ onClose, onUpdate }: EnergyUpdateMod
             <input
               type="range"
               min="0"
-              max="100"
+              max="10"
               value={emotionalBandwidth}
               onChange={(e) => setEmotionalBandwidth(Number(e.target.value))}
               className="w-full h-2 bg-gray-300 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#FDE047] [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-black [&::-webkit-slider-thumb]:cursor-pointer"
             />
             <div className="flex justify-between text-xs text-[#909090] mt-2">
-              <span>LOW</span>
-              <span>HIGH</span>
+              <span>0</span>
+              <span className="font-bold text-black">{emotionalBandwidth}</span>
+              <span>10</span>
             </div>
           </div>
         </div>
