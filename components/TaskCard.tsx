@@ -82,7 +82,7 @@ export default function TaskCard({
           {showEditButton && (
             <button
               onClick={onEdit}
-              className="px-2 py-1.5 border-[#39BAD1] bg-[#D3F8FF] text-[#39BAD1]  font-bold rounded-full border-[3px]  flex items-center gap-1.5 hover:bg-[#2da3ba] transition-colors"
+              className="px-2 py-1.5 border-[#39BAD1] bg-[#D3F8FF] text-[#39BAD1]  font-bold rounded-full border-[3px]  flex items-center gap-1.5 hover:bg-[#2da3ba]/30 transition-colors"
             >
               <SquarePen color="#39BAD1" strokeWidth={3} size={16} />
               EDIT
