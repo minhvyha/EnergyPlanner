@@ -20,7 +20,7 @@ export default function TaskLibraryScreen() {
 
   // Load tasks from localStorage
   useEffect(() => {
-    setTasks(storage.getTasks());
+    setTasks(storage.getTasks().filter(task => !task.isDefault));
   }, []);
 
   const handleNewTask = (taskData: {

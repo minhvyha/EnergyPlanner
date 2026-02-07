@@ -13,35 +13,10 @@ type Screen = 'today' | 'tasks' | 'focus' | 'week'
 export default function Home() {
   const [activeScreen, setActiveScreen] = useState<Screen>('today')
 
-//   {
-//     "title": "test",
-//     "description": "testtesttesttesttesttesttest",
-//     "energyLevel": "med",
-//     "duration": "12",
-//     "subject": "adsadadsd",
-//     "inFocus": true,
-//     "id": 1770370146875,
-//     "checked": false
-// }
-  // set default tasks if there are none in storage for today's date
   useEffect(() => {
-    const today = new Date().toISOString().split('T')[0]
-    const existing = storage.getTasks()
-    if (!existing) {
-      const defaultTasks = [
-        {
-          title: "Morning Exercise",
-          description: "30 minutes of yoga or jogging to start the day.",
-          energyLevel: "med",
-          duration: "30 mins",
-          subject: "Health",
-          inFocus: false,
-          id: Date.now() + 1,
-          checked: false
-        }
-      ]
-    }
+    storage.checkAndResetIfNewDay()
   }, [])
+
   return (
     <div className="min-h-screen bg-[#FAFFFD] pb-20">
       <div className="max-w-md mx-auto">

@@ -118,6 +118,7 @@ const regenerateDefaultTasksForToday = (
   emotional: number,
 ): Task[] => {
   const defaultTasks = getDefaultTasksForEnergy(mental, physical, emotional);
+  console.log(defaultTasks);
   return defaultTasks.map((dt) => ({
     ...dt,
     id: Date.now() + Math.random(),
@@ -173,8 +174,8 @@ export const storage = {
         date: today,
         tasks: newDayTasks,
         completedTaskCount: 0,
-        energyLevel: undefined,
-        energyCheckIns: [],
+        energyLevel: lastEnergyLevel,
+        energyCheckIns: [lastEnergyLevel],
       });
 
       localStorage.setItem(CURRENT_DATE_KEY, today);
@@ -287,9 +288,6 @@ export const storage = {
     });
 
     storage.saveTasks(updatedTasks);
-
-    const numericEnergy = inferEnergyFromTasks(updatedTasks);
-    storage.saveEnergyLevels(numericEnergy as unknown as EnergyLevels);
   },
 
   deleteTask: (id: number) => {
@@ -331,11 +329,11 @@ export const storage = {
 
     // Regenerate default tasks using averaged numeric components if available
     let updatedTasks = todayData.tasks || [];
-    if (averagedEnergy && typeof averagedEnergy.mental === "number") {
+    if (energy && typeof energy.mental === "number") {
       const newDefaultTasks = regenerateDefaultTasksForToday(
-        averagedEnergy.mental,
-        averagedEnergy.physical,
-        averagedEnergy.emotional,
+        energy.mental,
+        energy.physical,
+        energy.emotional,
       );
       // remove old default tasks, keep user-created tasks
       const userTasks = updatedTasks.filter((t) => !t.isDefault);

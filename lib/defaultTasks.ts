@@ -452,6 +452,8 @@ export const getDefaultTasksForEnergy = (
   emotional: number,
 ): Omit<Task, 'id' | 'checked' | 'inFocus'>[] => {
   // Find all matching categories (ordered by specificity)
+    console.log('inputs', { mental, physical, emotional, types: [typeof mental, typeof physical, typeof emotional] })
+
   const matchedCategories = taskCategories.filter(cat =>
     cat.condition(mental, physical, emotional),
   )

@@ -20,9 +20,9 @@ export default function EnergyUpdateModal({ onClose, onUpdate }: EnergyUpdateMod
     if (typeof window !== 'undefined') {
       const saved = storage.getEnergyLevels()
       if (saved) {
-        setMentalFocus(saved.mental || 5)
-        setPhysicalEnergy(saved.physical || 5)
-        setEmotionalBandwidth(saved.emotional || 5)
+        setMentalFocus(saved.mental)
+        setPhysicalEnergy(saved.physical)
+        setEmotionalBandwidth(saved.emotional)
       }
     }
   }, [])

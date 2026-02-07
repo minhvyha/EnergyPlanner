@@ -40,21 +40,12 @@ export default function RightNowScreen() {
   // Recompute suggested tasks whenever energyLevel changes
   useEffect(() => {
     const allTasks = storage.getTasks();
-    if(energyLevel === "HIGH") {
-      setSuggestedTasks(allTasks)
-    } else if(energyLevel === "MED") {
-      const filtered = allTasks.filter(
-        (task) =>
-          (task.energyLevel === "med" || task.energyLevel === "low") && !task.inFocus,
-      );
-      setSuggestedTasks(filtered.slice(0, 5));
-    } else if(energyLevel === "LOW") {
-      const filtered = allTasks.filter(
-        (task) => task.energyLevel === "low" && !task.inFocus,
-      );
-      setSuggestedTasks(filtered.slice(0, 5));
-    }
-
+    const randomize = (arr: Task[]) => arr.sort(() => 0.5 - Math.random());
+    const filtered = allTasks.filter(
+      (task) =>
+        !task.inFocus && task.energyLevel === ENERGY_MAP[energyLevel],
+    );
+    setSuggestedTasks(randomize(filtered).slice(0, 3)); // show up to 3 suggestions
   }, [energyLevel]);
 
   return (
@@ -161,10 +152,13 @@ export default function RightNowScreen() {
                       <EnergyBadge level={task.energyLevel} />
                       <button
                         onClick={() => {
+
                           storage.updateTask(task.id, { inFocus: true });
                           setSuggestedTasks(
                             suggestedTasks.filter((t) => t.id !== task.id),
                           );
+                          const allTasks = storage.getTasks();
+                          console.log("All tasks after update:", allTasks);
                         }}
                         className="px-3 py-2 border-[#AA78CD] text-[#AA78CD] font-bold rounded-full border-[3px] bg-[#F5E7FF] hover:bg-[#AA78CD]/40 transition-colors"
                       >
